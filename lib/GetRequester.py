@@ -2,8 +2,7 @@ import requests
 import json
 
 class GetRequester:
-    url = "http://makeup-api.herokuapp.com/api/v1/products.json"
-
+    url = "https://learn-co-curriculum.github.io/json-site-example/endpoints/people.json"
     def __init__(self, url):
         self.url = url
        
@@ -13,27 +12,19 @@ class GetRequester:
         return response.content
 
     def load_json(self):
-        return json.loads(self.get_response_body())
-    
-    # def get_programs(self):
-    # URL = "http://makeup-api.herokuapp.com/api/v1/products.json"
+        dict_list = []
+        body = self.get_response_body()
+        data = json.loads(body)
 
-    # response = requests.get(URL)
-    # return response.content
-  
-#   def program_school(self):
-#     # we use the JSON library to parse the API response into nicely formatted JSON
-#     product_list = []
-#     products = json.loads(self.get_programs())
-#     for product in products:
-#             product_list.append(product["product_type"])
+        for entry in data:
+            name = entry["name"]
+            occupation = entry["occupation"]
+            dict_list.append(f"{name}{occupation}")
 
-#     return product_list
+        return dict_list
 
-# # programs = GetPrograms().get_programs()
-# # print(programs)
-# programs = GetPrograms()
-# programs_schools = programs.program_school()
+names = GetRequester("https://learn-co-curriculum.github.io/json-site-example/endpoints/people.json")
+all_data = names.load_json()
 
-# for product in set(programs_schools):
-#     print(product)
+for entry in all_data:
+    print(entry)
